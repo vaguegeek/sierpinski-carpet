@@ -12,8 +12,6 @@ if (!gl) {
   throw new Error("WebGL not supported");
 }
 
-const MAX_DEPTH = 6; // 8^6 = 262,144개 사각형(정점 약 157만 개)까지 허용. 더 큰 값은 실시간 반응이 느려짐.
-
 const depthInput = document.getElementById("depth");
 const fillColorInput = document.getElementById("fillColor");
 const bgColorInput = document.getElementById("bgColor");
@@ -141,9 +139,8 @@ function render() {
 
 function rebuild() {
   let depth = parseInt(depthInput.value, 10);
-  if (isNaN(depth)) depth = 0;
-  depth = Math.min(Math.max(depth, 0), MAX_DEPTH);
-  depthInput.value = depth; // 범위를 벗어난 입력은 화면에도 보정된 값으로 되돌려줌
+  if (isNaN(depth) || depth < 0) depth = 0; // 음수는 재귀 종료 조건(depth === 0)에 도달하지 못해 스택 오버플로우가 나므로 0으로 보정
+  depthInput.value = depth;
 
   const { vertices, squareCount } = buildVertices(depth);
   vertexCount = vertices.length / 2;
