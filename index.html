@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Sierpinski Carpet - WebGL</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #1e1e1e;
+    color: #eee;
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  }
+  h1 {
+    font-size: 20px;
+    margin: 16px 0 8px;
+  }
+  #controls {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    background: #2a2a2a;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  #controls label {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    gap: 4px;
+  }
+  #depthValue, #squareCount {
+    font-weight: bold;
+    color: #6cb0ff;
+  }
+  canvas {
+    background: #fff;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  }
+  #info {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #aaa;
+  }
+</style>
+</head>
+<body>
+  <h1>Sierpinski Carpet (WebGL)</h1>
+
+  <div id="controls">
+    <label>
+      분할 횟수 (Depth): <span id="depthValue">3</span>
+      <input type="range" id="depth" min="0" max="6" step="1" value="3">
+    </label>
+    <label>
+      도형 색상
+      <input type="color" id="fillColor" value="#2d6cdf">
+    </label>
+    <label>
+      배경 색상
+      <input type="color" id="bgColor" value="#ffffff">
+    </label>
+  </div>
+
+  <canvas id="glcanvas" width="600" height="600"></canvas>
+
+  <div id="info">사각형 개수: <span id="squareCount">0</span></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
