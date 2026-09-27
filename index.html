@@ -34,9 +34,18 @@
     font-size: 13px;
     gap: 4px;
   }
-  #depthValue, #squareCount {
+  #squareCount {
     font-weight: bold;
     color: #6cb0ff;
+  }
+  #depth {
+    width: 60px;
+    font-size: 14px;
+    padding: 4px 6px;
+  }
+  #depthHint {
+    font-size: 11px;
+    color: #888;
   }
   canvas {
     background: #fff;
@@ -54,8 +63,9 @@
 
   <div id="controls">
     <label>
-      분할 횟수 (Depth): <span id="depthValue">3</span>
-      <input type="range" id="depth" min="0" max="6" step="1" value="3">
+      분할 횟수 (Depth)
+      <input type="number" id="depth" min="0" max="6" step="1" value="3">
+      <span id="depthHint">0~6, Enter로 적용</span>
     </label>
     <label>
       도형 색상

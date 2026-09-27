@@ -12,8 +12,9 @@ if (!gl) {
   throw new Error("WebGL not supported");
 }
 
-const depthSlider = document.getElementById("depth");
-const depthValueEl = document.getElementById("depthValue");
+const MAX_DEPTH = 6; // 8^6 = 262,144개 사각형(정점 약 157만 개)까지 허용. 더 큰 값은 실시간 반응이 느려짐.
+
+const depthInput = document.getElementById("depth");
 const fillColorInput = document.getElementById("fillColor");
 const bgColorInput = document.getElementById("bgColor");
 const squareCountEl = document.getElementById("squareCount");
@@ -139,8 +140,10 @@ function render() {
 }
 
 function rebuild() {
-  const depth = parseInt(depthSlider.value, 10);
-  depthValueEl.textContent = depth;
+  let depth = parseInt(depthInput.value, 10);
+  if (isNaN(depth)) depth = 0;
+  depth = Math.min(Math.max(depth, 0), MAX_DEPTH);
+  depthInput.value = depth; // 범위를 벗어난 입력은 화면에도 보정된 값으로 되돌려줌
 
   const { vertices, squareCount } = buildVertices(depth);
   vertexCount = vertices.length / 2;
@@ -152,7 +155,11 @@ function rebuild() {
   render();
 }
 
-depthSlider.addEventListener("input", rebuild);
+// 숫자 입력 후 Enter를 누르거나 입력창을 벗어나면(blur) 분할 횟수를 적용한다.
+depthInput.addEventListener("change", rebuild);
+depthInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") rebuild();
+});
 fillColorInput.addEventListener("input", render);
 bgColorInput.addEventListener("input", render);
 
